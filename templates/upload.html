@@ -1,0 +1,97 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'css/upload.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+
+        <input type="checkbox" name="" id="toggler">
+        <label for="toggler" class="fas fa-bars"></label>
+    
+        <a href="#" class="logo">Study Guide<span>.</span></a>
+    
+        <nav class="navbar">
+            <a href="/">home</a>
+            <a href="post">browse</a>
+            <a href="upload">upload</a>
+            <a href="#">profile</a>
+            <a href="#">contact</a>
+        </nav>
+    </header>
+    <section class="container">
+        <form action="" method="POST" class="form" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for message in messages %}
+            <h1 style="color:rgb(33, 92, 92) ;text-align:center">{{message}}!!</h4>
+            {% endfor %}
+            <div class="input-box file">
+                <label>Upload File</label>
+                <input type="file" name="file" />
+            </div>
+            Thumbnail
+            <div class="column image">
+                <div class="input-box" >
+                    <img src="{% static 'images/file.webp' %}" style="height:100px;width:100px;margin-left:60px" alt="" class="">
+                </div>
+                <div class="input-box">
+                    <!-- <label>Change Profile Pic</label> -->
+                    <input type="file" name="thumbnail" />
+                </div>
+            </div>
+            <!-- Preview images
+            <div class="column">
+                <div class="input-box">
+                    <label>Profile pic</label>
+                    <img src="{% static 'images/preview.jpg' %}" alt="" class="">
+                    <input type="file" name="image1" />
+                </div>
+                <div class="input-box">
+                    <label>Profile pic</label>
+                    <img src="{% static 'images/preview.jpg' %}" alt="" class="">
+                    <input type="file" name="image2" />
+                </div>
+                <div class="input-box">
+                    <label>Profile pic</label>
+                    <img src="{% static 'images/preview.jpg' %}" alt="" class="">
+                    <input type="file" name="image3" />
+                </div>
+            </div> -->
+            <div class="input-box title">
+                <label>Description</label>
+                <input type="text" placeholder="Enter title" name="text"/>
+            </div>
+        
+
+
+            <div class="input-box title">
+                    <label>Title</label>
+                    <input type="text" placeholder="Enter title" name="title"/>
+            </div>
+            
+
+            <div class="input-box">
+                <label>Course</label>
+                <input type="text" placeholder="Enter course" name="course" />
+            </div>
+            <div class="input-box">
+                <label>Subject</label>
+                <input type="text" placeholder="Enter  subject" name="subject" />
+            </div>
+            <!-- <div class="input-box">
+                <label>Day</label>
+                <input type="text" placeholder="Enter day" name="day" />
+            </div> -->
+            <button>Submit</button>
+        </form>
+    </section>
+</body>
+</html>

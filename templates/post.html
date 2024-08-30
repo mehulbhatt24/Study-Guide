@@ -1,0 +1,307 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/post.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <title>Document</title>
+</head>
+<header>
+
+    <input type="checkbox" name="" id="toggler">
+    <label for="toggler" class="fas fa-bars"></label>
+
+    <a href="#" class="logo">Study Guide<span>.</span></a>
+
+    <nav class="navbar">
+        <a href="/">home</a>
+        <a href="post">browse</a>
+        <a href="upload">upload</a>
+        <a href="#">profile</a>
+        <a href="#">contact</a>
+    </nav>
+
+    <div class="icons">
+        <a class="fas fa-user" onclick="toggleMenu()"></a>
+    </div>
+
+</header>
+<div class="sub-menu-wrap" id="subMenu">
+    <div class="sub-menu">
+        <a href="profile/{{user.username}}">
+        {% if user.is_authenticated %}
+        <div class="user-info">
+            {% if user_profile.image is not None %}
+            <img src="{{user_profile.image.url}}" alt="">
+            {%endif%}
+            <h3> @{{user.username}} </h3>
+        </div>
+        {%else%}
+        <div class="user-info">
+            <img src="{% static 'images/blank.webp' %}" alt="">
+            <!-- <h3>Mehul Bhatt</h3> -->
+        </div>
+        {%endif%}
+        </a>
+        <hr>
+
+        <a href="accounts" class="sub-menu-link">
+            <img src="{% static 'images/abc.jpg' %}" alt="">
+            <p>Edit Profile</p>
+            <span>></span>
+        </a>
+        <a href="#" class="sub-menu-link">
+            <img src="{% static 'images/abc.jpg' %}" alt="">
+            <p>Help</p>
+            <span>></span>
+        </a>
+        {% if user.is_authenticated %}
+        <a href="logout" class="sub-menu-link">
+            <img src="{% static 'images/abc.jpg' %}" alt="">
+            <p>Log Out</p>
+            <span>></span>
+        </a>
+        {% else %}
+        <a href="signin" class="sub-menu-link">
+            <img src="{% static 'images/abc.jpg' %}" alt="">
+            <p>Log In</p>
+            <span>></span>
+        </a>
+        {%endif%}
+    </div>
+</div>
+
+<body>
+    <main>
+        <div class="blogs">
+            {% for post in posts %}
+            <div class="blog-post">
+                <div class="blog-post_img">
+                    {% if post.thumbnail %}
+                    <img src="{{post.thumbnail.url}}" alt="" class="">
+                    {% else %}
+                    <img src="{% static 'images/post_blank.jpg' %}" alt="" class="">
+                    {% endif %}
+                </div>
+                <div class="blog-post_info">
+                    <div class="blog-post_date">
+                        <span>{{post.course}}</span>
+                        <span>{{post.date}}</span>
+                    </div>
+                    <h1 class="blog-post_title">{{post.title}}</h1>
+                    <p class="blog-post_text">
+                        <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae tempora soluta aliquam excepturi
+                        blanditiis rerum labore, doloremque maiores unde illo fugiat reiciendis et eum, accusantium
+                        voluptatem quis veniam fuga quas numquam voluptate repellat, tenetur hic. Officia numquam sequi
+                        sunt eos ex explicabo eligendi aliquam doloribus nesciunt, dolorum ratione voluptatibus
+                        accusamus. -->
+                        {{post.text}}
+                    </p>
+                    <div class="post_end">
+                        <div class="preview">
+                            {% if post.file1 %}
+                        <a href="{{post.file1.url}}" class="blog-post_cta" download>Download</a>
+                        {% endif %}
+                        </div>
+                        <div class="like">
+                        <div class="like-link">
+                        <a href="like_post?post_id={{post.id}}">
+                            <i class='bx bx-heart'></i>
+                            <span class="links_name">Like</span>
+                        </a>
+                        <div style="padding-left:5px;color:purple">{{post.no_of_likes}} Likes</div>
+                        </div>
+                        {% if post.profile.image %}
+                        <a href="profile/{{post.profile.user.username}}">
+                        <img src="{{post.profile.image.url}}" alt="here">
+                        </a>
+                        {%endif%}
+                        </div>
+                        </div>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- <div class="blog-post">
+                <div class="blog-post_img">
+                    <img src="{% static 'images/abc.jpg' %}" alt="" class="">
+                </div>
+                <div class="blog-post_info">
+                    <div class="blog-post_date">
+                        <span>Sunday</span>
+                        <span>October 27 2003</span>
+                    </div>
+                    <h1 class="blog-post_title">Title</h1>
+                    <p class="blog-post_text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae tempora soluta aliquam excepturi
+                        blanditiis rerum labore, doloremque maiores unde illo fugiat reiciendis et eum, accusantium
+                        voluptatem quis veniam fuga quas numquam voluptate repellat, tenetur hic. Officia numquam sequi
+                        sunt eos ex explicabo eligendi aliquam doloribus nesciunt, dolorum ratione voluptatibus
+                        accusamus.
+                    </p>
+                    <div class="post_end">
+                    <div class="preview">
+                    <a href="#" class="blog-post_cta">Read more</a>
+                    </div>
+                    <div class="like">
+                    <div class="like-link">
+                    <a href="#">
+                        <i class='bx bx-heart'></i>
+                        <span class="links_name">Like</span>
+                    </a>
+                    </div>
+                    <img src="abc.jpg" alt="here">
+                    </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </main>
+
+    <form action="" method="POST">
+    {%csrf_token%}
+    <div class="sidebar">
+        <div class="logo-details">
+            <i class='bx bxl-c-plus-plus icon'></i>
+            <div class="logo_name">Tools</div>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul class="nav-list">
+            <li>
+                <i class='bx bx-search'></i>
+                <input type="text" placeholder="Search topic" name="search_topic">
+                <span class="tooltip">Search Title</span>
+            </li>
+            <li>
+                <!-- <a href="#"> -->
+                    <!-- <i class='bx bx-grid-alt'></i> -->
+                <i class="bx bx-detail"></i>
+                <input type="text" placeholder = 'Search subject' name="search_subject">
+                <!-- </a> -->
+                <span class="tooltip">Search subject</span>
+            </li>
+            <li>
+                <!-- <a href="#"> -->
+                    <i class='bx bx-sort-alt-2'></i>
+                    <!-- <span class="links_name">User</span> -->
+                    <select name='sort_by_date'>
+                        <option value="" selected>SortByDate</option>
+                        <option value="">--None--</option>
+                        <option value="TopToBottom">NewestFirst</option>
+                        <option value="BottomToTop">OldestFirst</option>
+                    </select>
+                <!-- </a> -->
+                <span class="tooltip">User</span>
+            </li>
+            <li>
+                <!-- <a href="#"> -->
+                    <i class='bx bx-sort-alt-2'></i>
+                    <!-- <span class="links_name">User</span> -->
+                    <select name='sort_by_likes'>
+
+                        <option value="" selected >SortByLikes</option>
+                        <option value="">--None--</option>
+                        <option value="TopToBottom">TopToBottom</option>
+                        <option value="BottomToTop">BottomToTop</option>
+                    </select>
+                <!-- </a> -->
+                <span class="tooltip">User</span>
+            </li>
+            <li>
+                <i class="bx bx-message-square-check"></i>
+                <input type="submit">
+            </li>
+            <!-- <li>
+                <a href="#">
+                    <i class='bx bx-chat'></i>
+                    <span class="links_name">Messages</span>
+                </a>
+                <span class="tooltip">Messages</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-pie-chart-alt-2'></i>
+                    <span class="links_name">Analytics</span>
+                </a>
+                <span class="tooltip">Analytics</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-folder'></i>
+                    <span class="links_name">File Manager</span>
+                </a>
+                <span class="tooltip">Files</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-cart-alt'></i>
+                    <span class="links_name">Order</span>
+                </a>
+                <span class="tooltip">Order</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-heart'></i>
+                    <span class="links_name">Saved</span>
+                </a>
+                <span class="tooltip">Saved</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-cog'></i>
+                    <span class="links_name">Setting</span>
+                </a>
+                <span class="tooltip">Setting</span>
+            </li>-->
+            <li class="profile">
+                <!-- <div class="profile-details">
+                    <img src="profile.jpg" alt="profileImg">
+                    <div class="name_job">
+                        <div class="name">Prem Shahi</div>
+                        <div class="job">Web designer</div>
+                    </div>
+                </div> -->
+                <a href = 'logout'>
+                <i class='bx bx-log-out' id="log_out"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    </form>
+    <script>
+        let sidebar = document.querySelector(".sidebar");
+        let closeBtn = document.querySelector("#btn");
+        let searchBtn = document.querySelector(".bx-search");
+
+        closeBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("open");
+            menuBtnChange();//calling the function(optional)
+        });
+
+        searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
+            sidebar.classList.toggle("open");
+            menuBtnChange(); //calling the function(optional)
+        });
+
+        // following are the code to change sidebar button(optional)
+        function menuBtnChange() {
+            if (sidebar.classList.contains("open")) {
+                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+            } else {
+                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");//replacing the iocns class
+            }
+        }
+        let subMenu = document.getElementById("subMenu");
+        function toggleMenu(){
+        // subMenu.style.maxWidth = '400px';
+            subMenu.classList.toggle("open-menu");
+        }
+    </script>
+</body>
+
+</html>

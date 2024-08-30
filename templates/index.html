@@ -1,0 +1,264 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+</head>
+<body>
+
+<!-- header section starts  -->
+
+<header>
+
+    <input type="checkbox" id="toggler">
+    <label for="toggler" class="fas fa-bars"></label>
+
+    <a href="#" class="logo">Study Guide<span>.</span></a>
+
+    <nav class="navbar">
+        <a href="/">home</a>
+        <a href="post">browse</a>
+        <a href="upload">upload</a>
+        <a href="#">profile</a>
+        <a href="#">contact</a>
+    </nav>
+
+    <div class="icons">
+        <a class="fas fa-user" onclick="toggleMenu()"></a>
+    </div>
+    
+</header>
+<div class="sub-menu-wrap" id="subMenu">
+    <div class="sub-menu">
+        {% if user.is_authenticated %}
+        <div class="user-info">
+            {% if user_profile.image is not None %}
+            <img src="{{user_profile.image.url}}" alt="">
+            {%endif%}
+            <h3> {{user.username}} </h3>
+        </div>
+        {%else%}
+        <div class="user-info">
+            <img src="{% static 'images/blank.webp' %}" alt="">
+            <!-- <h3>Mehul Bhatt</h3> -->
+        </div>
+        {%endif%}
+        <hr>
+
+        <a href="accounts" class="sub-menu-link">
+            <img src="{% static 'images/abc.jpg' %}" alt="">
+            <p>Edit Profile</p>
+            <span>></span>
+        </a>
+        <a href="#" class="sub-menu-link">
+            <img src="{% static 'images/abc.jpg' %}" alt="">
+            <p>Help</p>
+            <span>></span>
+        </a>
+        {% if user.is_authenticated %}
+        <a href="logout" class="sub-menu-link">
+            <img src="{% static 'images/abc.jpg' %}" alt="">
+            <p>Log Out</p>
+            <span>></span>
+        </a>
+        {% else %}
+        <a href="signin" class="sub-menu-link">
+            <img src="{% static 'images/abc.jpg' %}" alt="">
+            <p>Log In</p>
+            <span>></span>
+        </a>
+        {%endif%}
+    </div>
+</div>
+<!-- header section ends -->
+
+<!-- home section starts  -->
+
+<section class="home" id="home">
+
+    <div class="content">
+        <h3>Study Guide</h3>
+        <span> Browse or upload Notes </span>
+        <p>Get handwritten notes on numerous topics contributed by users all around the globe for free.</p>
+        {%if user.is_authenticated %}
+        <a href="logout" class="btn">Log Out</a>
+        {%else%}
+        <a href="signin" class="btn">Sign Up now</a>
+        {%endif%}
+    </div>
+    
+</section>
+
+<!-- home section ends -->
+
+<!-- about section starts  -->
+
+<section class="about" id="about">
+
+    <h1 class="heading"> <span> about </span> us </h1>
+
+    <div class="row">
+
+        <div class="video-container">
+            <img src="static/images/bg3.webp" ></img>
+            <!-- <h3>Free!</h3> -->
+        </div>
+
+        <div class="content">
+            <h3></h3>
+            <p>We have a large community of students all around the globe. You can get handwritten notes for any courses, topics or subjects. You can also contribute by uploading your notes on the platform. </p>
+            <p>We have created a platform for students to share resources and help each other. Everythin on our platform is free and accessible for everyone.</p>
+            {% if user.is_authenticated %}
+            <a href="post" class="btn">View Notes</a>
+            {% else %}
+            <a href="signin" class="btn">Join Us</a>
+            {% endif %}
+        </div>
+
+    </div>
+
+</section>
+
+<!-- about section ends -->
+
+<!-- icons section starts  -->
+
+<section class="icons-container">
+
+    <div class="icons">
+        <img src="images/icon-1.png" alt="">
+        <div class="info">
+            <h3>Free Notes</h3>
+            <span>from all over the world</span>
+        </div>
+    </div>
+
+    <div class="icons">
+        <img src="images/icon-2.png" alt="">
+        <div class="info">
+            <h3>Variety</h3>
+            <span>More than a 1000 uploads</span>
+        </div>
+    </div>
+
+    <div class="icons">
+        <img src="images/icon-3.png" alt="">
+        <div class="info">
+            <h3>Easy downloads</h3>
+            <span>One click download</span>
+        </div>
+    </div>
+
+    <div class="icons">
+        <img src="images/icon-4.png" alt="">
+        <div class="info">
+            <h3>Share</h3>
+            <span>Upload and help others</span>
+        </div>
+    </div>
+   
+</section>
+
+<!-- icons section ends -->
+
+<!-- review section starts  -->
+
+<section class="review" id="review">
+
+<h1 class="heading"> Features </h1>
+
+<div class="box-container">
+
+    <div class="box">
+        
+        <p>
+            Browse among a wide category of subjects. Search for notes uploaded by users who study the same subjects as you.
+        </p>
+        <div class="user">
+            <!-- <img src="images/pic-1.png" alt=""> -->
+            <div class="user-info">
+                <h3><button class="btn"><a href="post">Browse</a></button></h3>
+                <!-- <span>happy customer</span> -->
+            </div>
+        </div>
+        <span class="fas fa-quote-right"></span>
+    </div>
+
+    <div class="box">
+        <p>Contribute by Uploading your notes and help others.</p>
+        <div class="user">
+            <!-- <img src="images/pic-2.png" alt=""> -->
+            <div class="user-info">
+                <h3><button class="btn"><a href="upload">Upload</a></button></h3>
+            </div>
+        </div>
+        <span class="fas fa-quote-right"></span>
+    </div>
+
+    <div class="box">
+        
+        <p>Search for notes contributed by students from your region</p>
+        <div class="user">
+            <div class="user-info">
+                <h3><button class="btn"><a href="post">Explore</a></button></h3>
+            </div>
+        </div>
+        <span class="fas fa-quote-right"></span>
+    </div>
+
+</div>
+    
+</section>
+
+<!-- review section ends -->
+
+<!-- contact section starts  -->
+
+
+<section class="footer">
+
+    <div class="box-container">
+
+        <div class="box">
+            <h3>quick links</h3>
+            <a href="#">home</a>
+            <a href="#">about</a>
+            <a href="post">browse</a>
+            <a href="#">review</a>
+            <a href="#">contact</a>
+        </div>
+
+        <div class="box">
+            <h3>Follow Us On</h3>
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+            <a href="#">Discord</a>
+        </div>
+
+
+    </div>
+
+    <div class="credit"> created by <span> Mehul Bhatt </span> | all rights reserved </div>
+
+</section>
+
+<!-- footer section ends -->
+
+<script src="{% static 'js/index.js' %}"></script>
+
+
+
+
+</body>
+</html>

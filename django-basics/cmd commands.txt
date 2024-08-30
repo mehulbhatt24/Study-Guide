@@ -1,0 +1,10 @@
+django-admin startproject myproject	to create new folder/new project
+mkvirtualenv name - create virtual env
+django_project is virtual environment
+deactivate - get out of virtual environment
+workon django_project - get inside virtusal env
+manage.py startapp myapp - to create app
+python manage.py runserver - to run project
+python manage.py makemigrations - any change we make in model file save them to database
+    python manage.py migrate
+python manage.py create superuser - create admin user

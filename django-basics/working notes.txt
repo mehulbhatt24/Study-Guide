@@ -1,0 +1,86 @@
+1.  created a new project/folder named myproject
+2.  made a virtual environment for it
+3.  created myapp inside this project
+4.  added urls for rendering in myapp urls.py
+        -   included myapp.urls in myproject.urls
+        -   made templates to store templates
+        -   told myproject settings template dir about templates folder
+5.  dynamic data in templates
+        -   render from views with a dict with dynamic data
+6.  word counter
+        -   form has an action counter
+        -   urls runs views.counter
+        -   we GET word_count from request
+        -   then we run counter.html and display count
+7.  GET vs POST method 
+        -   the text is passed in url
+        -   this is because by default the method is GET
+        -   GET method when using not secure info
+        -   POST method,  we cannot have login info in url
+        -   we have to use {% CSRF_token %} for security
+        -   its a secret unique unpredictable value
+        -   in views.py also request.POST(text)
+8.  static files(css)
+        -   made static folder
+        -   import os in settings.py
+        -   added statiic file in static files dirs in settings
+        -   load static at top {% load static %}
+        -   to link static files href = {% static 'style.css' %}
+9.  models
+        -   can create class
+        -   import models classes in views
+        -   make object of those class and send those objects to html
+        -   can retrieve the data of class in html files
+        -   can use for loop and if statements in html
+        -   for loop if same divisions repeated with different object data
+        -   we have endfor and endif blocks as there is no indentation in html
+10. admin-panel
+        -   sqlite is django default database
+        -   make Feature real django model
+        -   register app in mainproject from settings
+                INSTALLED_APPS = [,'myapp']
+        -   make migrations in database whenever make/modify model
+        -   /admin - to admin panel
+        -   register the model in admin.py to make it visible in admin panel
+                -  from .models import Feature
+                -  admin.site.register(Feature)
+        -   can add objects of model directly from admin panel
+        -   Feature.objects.all() - to get all objects of model
+11.  user-authentication/registration
+        -   created url register and then register.html with action of form also == register
+        -   check if method == 'POST' that is if we are directed from register
+        -   from django.contrib.auth.models imported User and auth modules to check and authenticate existing users
+        -   from django.contrib imported messages
+        -   if User.objects.filter(email=email).exists():  
+               passed a message by messages.info(request,'message')
+        -   user = User.objects.create_user(username=username,...)
+               user.save()
+12.   user-login
+        -   get user adn password from form
+        -   user = auth.authenticate(username=username,password=password)
+        -   if user is not None
+               auth.login(request,user)
+        -   dynamic user data in webpage
+                {% if user.is_authenticated %}
+        -   created loginout nav if user.is_authenticated else login
+                auth.logout(request) to logout
+13.     Dynamic url routing
+        -   added url post path('post/<str:pk>',views.post,name='post')
+        -   def post in views post(request,pk): return render(request,'post.html',{'pk':pk})
+        -   created a list posts in counter
+                - for post in posts <a href="{% url 'post' post %}" post</a>
+14.     postgresql
+        -   create new database in pgadmin
+        -   in settings.py database default engine:django.db.backends.postgresql and name:'database_name'
+        -   pip install psycopg2 and Pillow : to connect postgress to django
+        -   python manage.py make migrations migrate
+extras
+        -   {% for post in posts reversed %} - access list of objects in reverse order
+        -   <p>{{post.body|truncatewords:20}} - access only first 20 words from charfield
+        -   post = Post.objects.get(id=pk)  -  to get object with given id
+
+
+
+         
+        
+
